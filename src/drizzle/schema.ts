@@ -19,7 +19,7 @@ export const accounts = pgTable(
       .primaryKey(),
     name: varchar('name', { length: 256 }).notNull(),
     apiKey: varchar('api_key').default(createUUID()).unique().notNull(),
-    region: varchar('region', { length: 256 }).notNull(),
+    country: varchar('country', { length: 256 }).notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at')
       .notNull()
