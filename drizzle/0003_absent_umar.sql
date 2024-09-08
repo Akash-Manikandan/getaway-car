@@ -1,0 +1,2 @@
+ALTER TABLE "users" ADD COLUMN "client_api_key" varchar DEFAULT gen_random_uuid() NOT NULL;--> statement-breakpoint
+ALTER TABLE "users" ADD CONSTRAINT "users_client_api_key_unique" UNIQUE("client_api_key");
