@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1725740653132,
+      "tag": "0000_aspiring_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1725741236137,
+      "tag": "0001_long_millenium_guard",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1725799067908,
+      "tag": "0002_goofy_warlock",
+      "breakpoints": true
+    }
+  ]
+}
