@@ -3,9 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DrizzleModule } from './drizzle/drizzle.module';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [DrizzleModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    DrizzleModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

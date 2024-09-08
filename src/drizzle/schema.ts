@@ -51,6 +51,10 @@ export const users = pgTable(
     isActive: boolean('is_active').notNull().default(true),
     last_login: timestamp('last_login'),
     extras: jsonb('extras').default({}),
+    clientApiKey: varchar('client_api_key')
+      .default(createUUID())
+      .unique()
+      .notNull(),
     accountId: varchar('account_id', { length: 128 }).references(
       () => accounts.id,
     ),
