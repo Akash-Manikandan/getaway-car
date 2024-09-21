@@ -12,8 +12,16 @@ export class UsersService {
     private db: NodePgDatabase<typeof schema>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.db
+      .insert(schema.users)
+      .values({
+        name: createUserDto.name,
+        email: createUserDto.email,
+        password: createUserDto.password,
+      })
+      .returning({ id: schema.users.id });
+    return user;
   }
 
   findAll() {
