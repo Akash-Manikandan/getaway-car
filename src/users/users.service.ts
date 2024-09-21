@@ -14,14 +14,24 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const user = await this.db
-      .insert(schema.user)
-      .values({
-        email: createUserDto.email,
-        password: createUserDto.password,
-        name: createUserDto.name,
-      })
-      .returning({ id: schema.user.id });
+    const user = await this.db.transaction(async (tx) => {
+      const [user] = await tx
+        .insert(schema.user)
+        .values({
+          name: createUserDto.name,
+          email: createUserDto.email,
+          password: createUserDto.password,
+
+        }).returning({ id: schema.user.id });
+      const [account] = await tx.select({
+        id: schema.account.id,
+      }).from(schema.account).where(eq(schema.account.id, createUserDto.accountId));
+      await tx.insert(schema.accountTouser).values({
+        accountId: account.id,
+        userId: user.id,
+      });
+      return user
+    })
     return user;
   }
 

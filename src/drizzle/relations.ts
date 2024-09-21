@@ -35,11 +35,11 @@ export const userTousergroupRelations = relations(
   userTousergroup,
   ({ one }) => ({
     user: one(user, {
-      fields: [userTousergroup.a],
+      fields: [userTousergroup.userId],
       references: [user.id],
     }),
     usergroup: one(usergroup, {
-      fields: [userTousergroup.b],
+      fields: [userTousergroup.usergroupId],
       references: [usergroup.id],
     }),
   }),
@@ -58,11 +58,11 @@ export const usergroupRelations = relations(usergroup, ({ many }) => ({
 
 export const roleTouserRelations = relations(roleTouser, ({ one }) => ({
   role: one(role, {
-    fields: [roleTouser.a],
+    fields: [roleTouser.roleId],
     references: [role.id],
   }),
   user: one(user, {
-    fields: [roleTouser.b],
+    fields: [roleTouser.userId],
     references: [user.id],
   }),
 }));
@@ -71,11 +71,11 @@ export const roleTousergroupRelations = relations(
   roleTousergroup,
   ({ one }) => ({
     role: one(role, {
-      fields: [roleTousergroup.a],
+      fields: [roleTousergroup.roleId],
       references: [role.id],
     }),
     usergroup: one(usergroup, {
-      fields: [roleTousergroup.b],
+      fields: [roleTousergroup.usergroupId],
       references: [usergroup.id],
     }),
   }),
@@ -85,11 +85,11 @@ export const permissionToroleRelations = relations(
   permissionTorole,
   ({ one }) => ({
     permission: one(permission, {
-      fields: [permissionTorole.a],
+      fields: [permissionTorole.permissionId],
       references: [permission.id],
     }),
     role: one(role, {
-      fields: [permissionTorole.b],
+      fields: [permissionTorole.roleId],
       references: [role.id],
     }),
   }),
@@ -106,11 +106,11 @@ export const accountRelations = relations(account, ({ many }) => ({
 
 export const accountTouserRelations = relations(accountTouser, ({ one }) => ({
   account: one(account, {
-    fields: [accountTouser.a],
+    fields: [accountTouser.accountId],
     references: [account.id],
   }),
   user: one(user, {
-    fields: [accountTouser.b],
+    fields: [accountTouser.userId],
     references: [user.id],
   }),
 }));

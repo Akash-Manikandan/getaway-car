@@ -219,26 +219,26 @@ export const service = pgTable(
 export const userTousergroup = pgTable(
   '_userTousergroup',
   {
-    a: text('A').notNull(),
-    b: text('B').notNull(),
+    userId: text('user_id').notNull(),
+    usergroupId: text('usergroup_id').notNull(),
   },
   (table) => {
     return {
       abUnique: uniqueIndex('_userTousergroup_AB_unique').using(
         'btree',
-        table.a.asc().nullsLast(),
-        table.b.asc().nullsLast(),
+        table.userId.asc().nullsLast(),
+        table.usergroupId.asc().nullsLast(),
       ),
-      bIdx: index().using('btree', table.b.asc().nullsLast()),
+      bIdx: index().using('btree', table.usergroupId.asc().nullsLast()),
       userTousergroupAFkey: foreignKey({
-        columns: [table.a],
+        columns: [table.userId],
         foreignColumns: [user.id],
         name: '_userTousergroup_A_fkey',
       })
         .onUpdate('cascade')
         .onDelete('cascade'),
       userTousergroupBFkey: foreignKey({
-        columns: [table.b],
+        columns: [table.usergroupId],
         foreignColumns: [usergroup.id],
         name: '_userTousergroup_B_fkey',
       })
@@ -251,26 +251,26 @@ export const userTousergroup = pgTable(
 export const roleTouser = pgTable(
   '_roleTouser',
   {
-    a: text('A').notNull(),
-    b: text('B').notNull(),
+    roleId: text('role_id').notNull(),
+    userId: text('user_id').notNull(),
   },
   (table) => {
     return {
       abUnique: uniqueIndex('_roleTouser_AB_unique').using(
         'btree',
-        table.a.asc().nullsLast(),
-        table.b.asc().nullsLast(),
+        table.roleId.asc().nullsLast(),
+        table.userId.asc().nullsLast(),
       ),
-      bIdx: index().using('btree', table.b.asc().nullsLast()),
+      bIdx: index().using('btree', table.userId.asc().nullsLast()),
       roleTouserAFkey: foreignKey({
-        columns: [table.a],
+        columns: [table.roleId],
         foreignColumns: [role.id],
         name: '_roleTouser_A_fkey',
       })
         .onUpdate('cascade')
         .onDelete('cascade'),
       roleTouserBFkey: foreignKey({
-        columns: [table.b],
+        columns: [table.userId],
         foreignColumns: [user.id],
         name: '_roleTouser_B_fkey',
       })
@@ -283,26 +283,26 @@ export const roleTouser = pgTable(
 export const roleTousergroup = pgTable(
   '_roleTousergroup',
   {
-    a: text('A').notNull(),
-    b: text('B').notNull(),
+    roleId: text('role_id').notNull(),
+    usergroupId: text('usergroup_id').notNull(),
   },
   (table) => {
     return {
       abUnique: uniqueIndex('_roleTousergroup_AB_unique').using(
         'btree',
-        table.a.asc().nullsLast(),
-        table.b.asc().nullsLast(),
+        table.roleId.asc().nullsLast(),
+        table.usergroupId.asc().nullsLast(),
       ),
-      bIdx: index().using('btree', table.b.asc().nullsLast()),
+      bIdx: index().using('btree', table.usergroupId.asc().nullsLast()),
       roleTousergroupAFkey: foreignKey({
-        columns: [table.a],
+        columns: [table.roleId],
         foreignColumns: [role.id],
         name: '_roleTousergroup_A_fkey',
       })
         .onUpdate('cascade')
         .onDelete('cascade'),
       roleTousergroupBFkey: foreignKey({
-        columns: [table.b],
+        columns: [table.usergroupId],
         foreignColumns: [usergroup.id],
         name: '_roleTousergroup_B_fkey',
       })
@@ -315,26 +315,26 @@ export const roleTousergroup = pgTable(
 export const permissionTorole = pgTable(
   '_permissionTorole',
   {
-    a: text('A').notNull(),
-    b: text('B').notNull(),
+    permissionId: text('permission_id').notNull(),
+    roleId: text('role_id').notNull(),
   },
   (table) => {
     return {
       abUnique: uniqueIndex('_permissionTorole_AB_unique').using(
         'btree',
-        table.a.asc().nullsLast(),
-        table.b.asc().nullsLast(),
+        table.permissionId.asc().nullsLast(),
+        table.roleId.asc().nullsLast(),
       ),
-      bIdx: index().using('btree', table.b.asc().nullsLast()),
+      bIdx: index().using('btree', table.roleId.asc().nullsLast()),
       permissionToroleAFkey: foreignKey({
-        columns: [table.a],
+        columns: [table.permissionId],
         foreignColumns: [permission.id],
         name: '_permissionTorole_A_fkey',
       })
         .onUpdate('cascade')
         .onDelete('cascade'),
       permissionToroleBFkey: foreignKey({
-        columns: [table.b],
+        columns: [table.roleId],
         foreignColumns: [role.id],
         name: '_permissionTorole_B_fkey',
       })
@@ -347,26 +347,26 @@ export const permissionTorole = pgTable(
 export const accountTouser = pgTable(
   '_accountTouser',
   {
-    a: text('A').notNull(),
-    b: text('B').notNull(),
+    accountId: text('account_id').notNull(),
+    userId: text('user_id').notNull(),
   },
   (table) => {
     return {
       abUnique: uniqueIndex('_accountTouser_AB_unique').using(
         'btree',
-        table.a.asc().nullsLast(),
-        table.b.asc().nullsLast(),
+        table.accountId.asc().nullsLast(),
+        table.userId.asc().nullsLast(),
       ),
-      bIdx: index().using('btree', table.b.asc().nullsLast()),
+      bIdx: index().using('btree', table.userId.asc().nullsLast()),
       accountTouserAFkey: foreignKey({
-        columns: [table.a],
+        columns: [table.accountId],
         foreignColumns: [account.id],
         name: '_accountTouser_A_fkey',
       })
         .onUpdate('cascade')
         .onDelete('cascade'),
       accountTouserBFkey: foreignKey({
-        columns: [table.b],
+        columns: [table.userId],
         foreignColumns: [user.id],
         name: '_accountTouser_B_fkey',
       })
