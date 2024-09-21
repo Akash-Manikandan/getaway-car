@@ -1,8 +1,8 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { users } from 'src/drizzle/schema';
+import { user } from 'src/drizzle/schema';
 import { ApiProperty } from '@nestjs/swagger';
 
-type NewUser = typeof users.$inferInsert;
+type NewUser = typeof user.$inferInsert;
 
 export class CreateUserDto {
   @ApiProperty({

@@ -11,30 +11,30 @@ export class UsersService {
   constructor(
     @Inject(DrizzleAsyncProvider)
     private db: NodePgDatabase<typeof schema>,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.db
-      .insert(schema.users)
+      .insert(schema.user)
       .values({
-        name: createUserDto.name,
         email: createUserDto.email,
         password: createUserDto.password,
+        name: createUserDto.name,
       })
-      .returning({ id: schema.users.id });
+      .returning({ id: schema.user.id });
     return user;
   }
 
   async findAll() {
-    const users = await this.db.select().from(schema.users);
+    const users = await this.db.select().from(schema.user);
     return users;
   }
 
   async findOne(id: string) {
     const user = await this.db
       .select()
-      .from(schema.users)
-      .where(eq(schema.users.id, id));
+      .from(schema.user)
+      .where(eq(schema.user.id, id));
     return user;
   }
 

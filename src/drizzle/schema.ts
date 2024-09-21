@@ -29,7 +29,7 @@ export const user = pgTable(
       .primaryKey()
       .notNull(),
     name: text('name').notNull(),
-    description: text('description').notNull(),
+    description: text('description'),
     isActive: boolean('is_active').default(false).notNull(),
     email: text('email').notNull(),
     password: text('password').notNull(),
@@ -67,7 +67,7 @@ export const usergroup = pgTable('usergroup', {
     .primaryKey()
     .notNull(),
   name: text('name').notNull(),
-  description: text('description').notNull(),
+  description: text('description'),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at', { precision: 3, mode: 'string' })
     .default(sql`CURRENT_TIMESTAMP`)
@@ -89,7 +89,7 @@ export const account = pgTable(
       .primaryKey()
       .notNull(),
     name: text('name').notNull(),
-    description: text('description').notNull(),
+    description: text('description'),
     isActive: boolean('is_active').default(true).notNull(),
     apiKey: text('api_key').notNull().default(createUUID()).unique(),
     createdAt: timestamp('created_at', { precision: 3, mode: 'string' })
