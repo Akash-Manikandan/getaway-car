@@ -40,7 +40,7 @@ export class AccountsService {
       .where(eq(schema.accounts.id, id));
   }
 
-  async editName() {}
+  // async editName() {}
 
-  async editCountry() {}
+  // async editCountry() {}
 }
