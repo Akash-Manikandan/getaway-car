@@ -7,6 +7,7 @@ import {
   foreignKey,
   index,
   pgEnum,
+  jsonb,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { createId } from '@paralleldrive/cuid2';
@@ -46,6 +47,7 @@ export const user = pgTable(
       .notNull()
       .defaultNow()
       .$onUpdate(() => UTC()),
+    extras: jsonb('extras').default({}),
   },
   (table) => {
     return {
@@ -79,6 +81,7 @@ export const usergroup = pgTable('usergroup', {
     .notNull()
     .defaultNow()
     .$onUpdate(() => UTC()),
+  extras: jsonb('extras').default({}),
 });
 
 export const account = pgTable(
@@ -102,6 +105,7 @@ export const account = pgTable(
       .notNull()
       .defaultNow()
       .$onUpdate(() => UTC()),
+    extras: jsonb('extras').default({}),
   },
   (table) => {
     return {
@@ -135,6 +139,7 @@ export const permission = pgTable('permission', {
     .notNull()
     .defaultNow()
     .$onUpdate(() => UTC()),
+  extras: jsonb('extras').default({}),
 });
 
 export const role = pgTable(
@@ -157,6 +162,7 @@ export const role = pgTable(
       .notNull()
       .defaultNow()
       .$onUpdate(() => UTC()),
+    extras: jsonb('extras').default({}),
   },
   (table) => {
     return {
@@ -191,6 +197,7 @@ export const service = pgTable(
       .notNull()
       .defaultNow()
       .$onUpdate(() => UTC()),
+    extras: jsonb('extras').default({}),
   },
   (table) => {
     return {
