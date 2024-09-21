@@ -11,7 +11,7 @@ export class AccountsService {
   constructor(
     @Inject(DrizzleAsyncProvider)
     private db: NodePgDatabase<typeof schema>,
-  ) { }
+  ) {}
 
   async createAccount(createAccountDto: CreateAccountDto) {
     await this.db.insert(schema.account).values({
