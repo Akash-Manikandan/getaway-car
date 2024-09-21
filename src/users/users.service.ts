@@ -21,7 +21,6 @@ export class UsersService {
           name: createUserDto.name,
           email: createUserDto.email,
           password: createUserDto.password,
-
         }).returning({ id: schema.user.id });
       const [account] = await tx.select({
         id: schema.account.id,
@@ -36,7 +35,19 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.db.select().from(schema.user);
+    const users = await this.db
+      .select({
+        id: schema.user.id,
+        name: schema.user.name,
+        email: schema.user.email,
+        password: schema.user.password,
+        account: {
+          id: schema.account.id,
+          name: schema.account.name,
+        },
+      }).from(schema.accountTouser)
+      .leftJoin(schema.user, eq(schema.accountTouser.userId, schema.user.id))
+      .leftJoin(schema.account, eq(schema.accountTouser.accountId, schema.account.id));
     return users;
   }
 
