@@ -25,6 +25,7 @@ async function bootstrap() {
     .setDescription('The Identity provider API description')
     .setVersion('1.0')
     .addTag('Identity provider')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
