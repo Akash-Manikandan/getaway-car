@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider';
 import * as schema from '../drizzle/schema';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class UsersService {
@@ -24,12 +25,17 @@ export class UsersService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    const users = await this.db.select().from(schema.users);
+    return users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string) {
+    const user = await this.db
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.id, id));
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
