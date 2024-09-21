@@ -37,7 +37,6 @@ export class AccountsController {
 
   @Delete(':id')
   deactivateAccount(@Param('id') id: string) {
-    console.log();
     return this.accountsService.deactivateAccount(id);
   }
 }
