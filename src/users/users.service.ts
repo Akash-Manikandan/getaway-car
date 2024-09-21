@@ -89,7 +89,6 @@ export class UsersService {
     } catch (error) {
       return new HttpException(error.message, error.status);
     }
-
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
