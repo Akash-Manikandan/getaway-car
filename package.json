@@ -31,6 +31,8 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@types/pg": "^8.11.8",
     "@xata.io/client": "^0.30.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "drizzle-orm": "^0.33.0",
     "pg": "^8.12.0",
     "postgres": "^3.4.4",
