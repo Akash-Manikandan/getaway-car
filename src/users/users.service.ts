@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,7 +18,7 @@ export class UsersService {
     private db: NodePgDatabase<typeof schema>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto, accountId: string) {
     try {
       const password = await hashPassword(createUserDto.password);
       const user = await this.db.transaction(async (tx) => {
@@ -35,7 +35,7 @@ export class UsersService {
             id: schema.account.id,
           })
           .from(schema.account)
-          .where(eq(schema.account.id, createUserDto.accountId));
+          .where(eq(schema.account.id, accountId));
         await tx.insert(schema.accountTouser).values({
           accountId: account.id,
           userId: user.id,
@@ -98,5 +98,73 @@ export class UsersService {
 
   remove(id: string) {
     return `This action removes a #${id} user`;
+  }
+
+  async validateUser(email: string) {
+    return await this.db.transaction(async (tx) => {
+      const [user] = await tx
+        .select({
+          id: schema.user.id,
+          email: schema.user.email,
+          password: schema.user.password,
+          isActive: schema.user.isActive,
+        })
+        .from(schema.user)
+        .where(eq(schema.user.email, email));
+      if (!user) {
+        return new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      return user;
+    });
+  }
+
+  async accountValidation(clientId: string, accountId: string) {
+    return await this.db.transaction(async (tx) => {
+      const [user] = await tx
+        .select({
+          id: schema.user.id,
+          clientId: schema.user.clientId,
+        })
+        .from(schema.user)
+        .where(eq(schema.user.clientId, clientId));
+      if (!user) {
+        return new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      const [userAccount] = await tx
+        .select({
+          userId: schema.accountTouser.userId,
+          accountId: schema.accountTouser.accountId,
+          clientId: schema.user.clientId,
+        })
+        .from(schema.accountTouser)
+        .leftJoin(schema.user, eq(schema.accountTouser.userId, schema.user.id))
+        .where(
+          and(
+            eq(schema.accountTouser.userId, user.id),
+            eq(schema.accountTouser.accountId, accountId),
+          ),
+        );
+      return userAccount;
+    });
+  }
+
+  async getUserByEmail(email: string) {
+    return await this.db.transaction(async (tx) => {
+      const [user] = await tx
+        .select({
+          id: schema.user.id,
+          email: schema.user.email,
+          clientId: schema.user.clientId,
+          name: schema.user.name,
+          isSuperUser: schema.user.isSuperUser,
+          isActive: schema.user.isActive,
+        })
+        .from(schema.user)
+        .where(eq(schema.user.email, email));
+      if (!user) {
+        return new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      return user;
+    });
   }
 }

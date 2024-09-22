@@ -39,6 +39,17 @@ export class AccountsService {
       .where(eq(schema.account.id, id));
   }
 
+  async getApiKey(id: string) {
+    const [result] = await this.db
+      .select({
+        apiKey: schema.account.apiKey,
+        isActive: schema.account.isActive,
+      })
+      .from(schema.account)
+      .where(eq(schema.account.id, id));
+    return result;
+  }
+
   // async editName() {}
 
   // async editCountry() {}

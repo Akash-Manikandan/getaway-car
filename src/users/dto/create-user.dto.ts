@@ -42,12 +42,4 @@ export class CreateUserDto {
     minUppercase: 1,
   })
   readonly password: NewUser['password'];
-
-  @ApiProperty({
-    type: String,
-    description: 'Account id',
-  })
-  @IsString()
-  @MinLength(3)
-  readonly accountId: string;
 }
