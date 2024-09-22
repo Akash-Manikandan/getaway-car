@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsStrongPassword,
+  MinLength,
+} from 'class-validator';
 import { user } from 'src/drizzle/schema';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -11,6 +17,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty()
+  @MinLength(3)
   readonly name: NewUser['name'];
 
   @ApiProperty({
@@ -19,6 +26,7 @@ export class CreateUserDto {
   })
   @IsEmail()
   @IsNotEmpty()
+  @MinLength(3)
   readonly email: NewUser['email'];
 
   @ApiProperty({
@@ -26,13 +34,12 @@ export class CreateUserDto {
     description: 'Password of the user',
   })
   @IsString()
-  @MinLength(8)
-  readonly password: NewUser['password'];
-
-  @ApiProperty({
-    type: String,
-    description: 'Account id',
+  @IsStrongPassword({
+    minLength: 6,
+    minLowercase: 1,
+    minNumbers: 1,
+    minSymbols: 1,
+    minUppercase: 1,
   })
-  @IsString()
-  readonly accountId: string;
+  readonly password: NewUser['password'];
 }

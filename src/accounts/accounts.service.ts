@@ -11,7 +11,7 @@ export class AccountsService {
   constructor(
     @Inject(DrizzleAsyncProvider)
     private db: NodePgDatabase<typeof schema>,
-  ) { }
+  ) {}
 
   async createAccount(createAccountDto: CreateAccountDto) {
     await this.db.insert(schema.account).values({
@@ -37,6 +37,17 @@ export class AccountsService {
       .update(schema.account)
       .set({ name: 'hi' })
       .where(eq(schema.account.id, id));
+  }
+
+  async getApiKey(id: string) {
+    const [result] = await this.db
+      .select({
+        apiKey: schema.account.apiKey,
+        isActive: schema.account.isActive,
+      })
+      .from(schema.account)
+      .where(eq(schema.account.id, id));
+    return result;
   }
 
   // async editName() {}
