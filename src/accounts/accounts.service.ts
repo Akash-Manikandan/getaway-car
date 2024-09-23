@@ -5,6 +5,7 @@ import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DrizzleAsyncProvider } from 'src/drizzle/drizzle.provider';
 import * as schema from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
 export class AccountsService {
@@ -33,6 +34,7 @@ export class AccountsService {
   }
 
   async deactivateAccount(id: string) {
+    // const json = { isActive: false };
     await this.db
       .update(schema.account)
       .set({ name: 'hi' })
@@ -50,7 +52,14 @@ export class AccountsService {
     return result;
   }
 
-  // async editName() {}
-
-  // async editCountry() {}
+  async update(id: string, updateAccountDto: UpdateAccountDto) {
+    const editableFields = ['name', 'description'];
+    const attribute = updateAccountDto.attribute;
+    if (attribute in editableFields) {
+      await this.db
+        .update(schema.account)
+        .set({ [attribute]: updateAccountDto.valueToBeUpdated })
+        .where(eq(schema.account.id, id));
+    }
+  }
 }
